@@ -85,7 +85,8 @@ h3 { font-size: 1.35rem; }
 .section-heading > p:not(.eyebrow) { max-width: 650px; color: var(--muted); font-size: 1.08rem; }
 .process-section { background: var(--surface); }
 .process-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(3rem, 8vw, 7rem); }
-.process-intro img { width: 82%; margin-top: 3rem; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.process-intro { display: flex; min-height: 0; flex-direction: column; }
+.process-intro img { flex: 1 1 0; width: 82%; height: 0; min-height: 0; margin-top: 3rem; object-fit: cover; border-radius: var(--radius); }
 .process-list { list-style: none; margin: 0; padding: 0; counter-reset: steps; }
 .process-list li { counter-increment: steps; position: relative; padding: 1.8rem 0 2rem 4.5rem; border-bottom: 1px solid var(--line); }
 .process-list li::before { content: counter(steps, decimal-leading-zero); position: absolute; left: 0; top: 1.7rem; color: var(--accent); font-size: .82rem; font-weight: 700; }
@@ -211,7 +212,7 @@ address { margin-bottom: 1rem; color: var(--muted); font-style: normal; }
   .hero { min-height: auto; }
   .hero-image { width: min(100%, 680px); }
   .hero-image img { min-height: 380px; }
-  .process-intro img { width: min(100%, 580px); }
+  .process-intro img { flex: none; width: min(100%, 580px); height: auto; aspect-ratio: 4 / 3; }
   .services-grid { grid-template-columns: 1fr; }
   .service-item:nth-child(even) { transform: none; }
   .about-image { order: 2; }
