@@ -53,7 +53,7 @@ const { limit = 12 } = Astro.props;
     });
 
     try {
-      const response = await fetch('/api/parte.json');
+      const response = await fetch('/api/parte.json?v=full-image-1');
       if (!response.ok) throw new Error('Zdroj není dostupný');
       const data = await response.json() as { items?: ParteItem[] };
       const items: ParteItem[] = Array.isArray(data.items) ? data.items.slice(0, limit) : [];

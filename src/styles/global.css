@@ -127,7 +127,7 @@ blockquote cite { display: block; margin-top: .8rem; color: var(--muted); font-s
 .parte-modal::backdrop { background: rgba(10, 17, 14, .82); backdrop-filter: blur(5px); }
 .parte-modal-shell { position: relative; height: 100%; }
 .parte-modal-image { display: grid; place-items: center; width: 100%; height: 100%; min-height: 0; padding: clamp(.25rem, 1vw, .75rem); overflow: hidden; }
-.parte-modal-image img { width: 100%; max-width: none; height: 100%; max-height: none; object-fit: contain; }
+.parte-modal-image img { width: auto; max-width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
 .parte-modal-close { position: absolute; top: 1rem; right: 1rem; z-index: 2; display: grid; place-items: center; width: 54px; height: 54px; padding: 0; border: 3px solid #fff; border-radius: 50%; background: #17231f; color: #fff; cursor: pointer; box-shadow: 0 5px 22px rgba(0, 0, 0, .62); }
 .parte-modal-close span[aria-hidden] { font-size: 2.25rem; font-weight: 500; line-height: 1; transform: translateY(-2px); }
 .parte-modal-close:hover { background: var(--accent-hover); }
