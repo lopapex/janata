@@ -92,7 +92,7 @@ const s = content.settings;
   </section>
 
   <section id="kontakt" class="section contact-section">
-    <div class="container contact-grid contact-grid-static">
+    <div class="container contact-grid">
       <div class="contact-details">
         <SectionHeading eyebrow="Kontakt" title="Ozvěte se nám" text="Zavolejte a domluvíme další postup nebo osobní návštěvu v kanceláři." />
         <a class="contact-phone" href={`tel:${s.phoneHref}`}>{s.phone}</a>
@@ -100,7 +100,7 @@ const s = content.settings;
         <p>IČO {s.ico}</p>
         <a class="button button-primary" href="https://www.openstreetmap.org/?mlat=50.0881857&mlon=16.4646499#map=18/50.0881857/16.4646499" target="_blank" rel="noopener noreferrer">Zobrazit mapu</a>
       </div>
-      <div class="map-shell">
+      <div class="map-shell contact-map-inline">
         <iframe title="Mapa kanceláře Pohřební služby Janata v Žamberku" src="https://www.openstreetmap.org/export/embed.html?bbox=16.4596%2C50.0855%2C16.4697%2C50.0910&amp;layer=mapnik&amp;marker=50.0881857%2C16.4646499" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
     </div>

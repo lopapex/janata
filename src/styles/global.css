@@ -145,8 +145,6 @@ body.parte-modal-open { overflow: hidden; }
 .gallery-wide { grid-row: 1 / 3; }
 
 .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(3rem, 10vw, 9rem); align-items: start; }
-.contact-grid-static { grid-template-columns: 1fr; gap: 3rem; }
-.contact-grid-static .contact-details { max-width: 800px; }
 .contact-details .section-heading { margin-bottom: 1.8rem; }
 .contact-phone { display: block; margin-bottom: 1.4rem; color: var(--accent); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 680; letter-spacing: -.03em; }
 address { margin-bottom: 1rem; color: var(--muted); font-style: normal; }
@@ -159,6 +157,7 @@ address { margin-bottom: 1rem; color: var(--muted); font-style: normal; }
 .form-help { color: var(--muted); font-size: .82rem; }
 .form-hidden { display: none; }
 .map-shell { grid-column: 1 / -1; min-height: 360px; margin-top: 1rem; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.contact-map-inline { grid-column: auto; margin-top: 0; }
 .map-shell iframe { display: block; width: 100%; height: 360px; border: 0; filter: saturate(.55) contrast(.96); }
 .draft-notice { padding: 1rem 0; border-top: 1px solid #d5c49f; background: #eee6d5; color: #4f452e; font-size: .78rem; }
 
