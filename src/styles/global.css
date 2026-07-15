@@ -158,7 +158,7 @@ address { margin-bottom: 1rem; color: var(--muted); font-style: normal; }
 .form-hidden { display: none; }
 .map-shell { grid-column: 1 / -1; min-height: 360px; margin-top: 1rem; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .contact-map-inline { grid-column: auto; margin-top: 0; }
-.map-shell iframe { display: block; width: 100%; height: 360px; border: 0; filter: saturate(.55) contrast(.96); }
+.map-shell iframe { display: block; width: 100%; height: 360px; border: 0; }
 .draft-notice { padding: 1rem 0; border-top: 1px solid #d5c49f; background: #eee6d5; color: #4f452e; font-size: .78rem; }
 
 .site-footer { padding: 4rem 0 1.5rem; background: var(--accent-deep); color: #f0f5f2; }
@@ -199,7 +199,6 @@ address { margin-bottom: 1rem; color: var(--muted); font-style: normal; }
   .brand-mark, .nav-call, .button-primary, .floating-call { color: #102019; }
   .contact-form input, .contact-form textarea { border-color: #6d8178; }
   .draft-notice { border-color: #665e48; background: #2b2921; color: #dcd2b8; }
-  .map-shell iframe { filter: invert(.88) hue-rotate(155deg) saturate(.55) brightness(.8); }
 }
 
 @media (prefers-reduced-motion: reduce) {
