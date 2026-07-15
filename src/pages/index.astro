@@ -92,7 +92,7 @@ const s = content.settings;
   </section>
 
   <section id="kontakt" class="section contact-section">
-    <div class="container contact-grid">
+    <div class="container contact-grid contact-grid-static">
       <div class="contact-details">
         <SectionHeading eyebrow="Kontakt" title="Ozvěte se nám" text="Zavolejte a domluvíme další postup nebo osobní návštěvu v kanceláři." />
         <a class="contact-phone" href={`tel:${s.phoneHref}`}>{s.phone}</a>
@@ -100,17 +100,6 @@ const s = content.settings;
         <p>IČO {s.ico}</p>
         <a class="button button-primary" href="https://www.openstreetmap.org/?mlat=50.0881857&mlon=16.4646499#map=18/50.0881857/16.4646499" target="_blank" rel="noopener noreferrer">Zobrazit mapu</a>
       </div>
-      <form class="contact-form" name="kontakt" method="POST" action="/dekujeme/" data-netlify="true" netlify-honeypot="website">
-        <input type="hidden" name="form-name" value="kontakt" />
-        <p class="form-hidden"><label>Web <input name="website" /></label></p>
-        <h2>Napište nám</h2>
-        <label>Jméno a příjmení<input type="text" name="jmeno" autocomplete="name" required /></label>
-        <label>Telefon<input type="tel" name="telefon" autocomplete="tel" required /></label>
-        <label>E-mail<input type="email" name="email" autocomplete="email" /></label>
-        <label>Krátká zpráva<textarea name="zprava" rows="4" maxlength="1000"></textarea></label>
-        <p class="form-help">Do zprávy neuvádějte zdravotní údaje ani jiné citlivé informace. V naléhavé situaci volejte.</p>
-        <button class="button button-primary" type="submit">Odeslat zprávu</button>
-      </form>
       <div class="map-shell">
         <iframe title="Mapa kanceláře Pohřební služby Janata v Žamberku" src="https://www.openstreetmap.org/export/embed.html?bbox=16.4596%2C50.0855%2C16.4697%2C50.0910&amp;layer=mapnik&amp;marker=50.0881857%2C16.4646499" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>

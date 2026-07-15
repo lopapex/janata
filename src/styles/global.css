@@ -145,6 +145,8 @@ body.parte-modal-open { overflow: hidden; }
 .gallery-wide { grid-row: 1 / 3; }
 
 .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(3rem, 10vw, 9rem); align-items: start; }
+.contact-grid-static { grid-template-columns: 1fr; gap: 3rem; }
+.contact-grid-static .contact-details { max-width: 800px; }
 .contact-details .section-heading { margin-bottom: 1.8rem; }
 .contact-phone { display: block; margin-bottom: 1.4rem; color: var(--accent); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 680; letter-spacing: -.03em; }
 address { margin-bottom: 1rem; color: var(--muted); font-style: normal; }
