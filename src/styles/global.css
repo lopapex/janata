@@ -23,6 +23,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 86px; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Janata Sans', Arial, sans-serif; font-size: 17px; line-height: 1.65; }
 body, button, input, textarea { font-family: inherit; }
