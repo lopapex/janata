@@ -22,6 +22,7 @@
   from = "/api/parte.json"
   to = "/.netlify/functions/parte"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/dekujeme"
