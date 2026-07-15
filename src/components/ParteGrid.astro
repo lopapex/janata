@@ -22,12 +22,11 @@ const { limit = 12 } = Astro.props;
       <div class="parte-modal-image">
         <img data-parte-modal-image alt="" referrerpolicy="no-referrer" />
       </div>
-      <p data-parte-modal-name></p>
     </div>
   </dialog>
 </div>
 <script>
-  interface ParteItem { name: string; imageUrl?: string; }
+  interface ParteItem { name: string; imageUrl?: string; fullImageUrl?: string; }
   const entities: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
   const escapeHtml = (value: unknown) => String(value).replace(/[&<>'"]/g, (char) => entities[char] ?? char);
   document.querySelectorAll('[data-parte-grid]').forEach(async (root) => {
@@ -36,9 +35,8 @@ const { limit = 12 } = Astro.props;
     const state = root.querySelector<HTMLElement>('[data-state]');
     const modal = root.querySelector<HTMLDialogElement>('[data-parte-modal]');
     const modalImage = root.querySelector<HTMLImageElement>('[data-parte-modal-image]');
-    const modalName = root.querySelector<HTMLElement>('[data-parte-modal-name]');
     const modalClose = root.querySelector<HTMLButtonElement>('[data-parte-close]');
-    if (!loading || !results || !state || !modal || !modalImage || !modalName || !modalClose) return;
+    if (!loading || !results || !state || !modal || !modalImage || !modalClose) return;
     const limit = Number(root.getAttribute('data-limit') || 12);
 
     const closeModal = () => {
@@ -61,7 +59,7 @@ const { limit = 12 } = Astro.props;
       const items: ParteItem[] = Array.isArray(data.items) ? data.items.slice(0, limit) : [];
       if (!items.length) throw new Error('Prázdný přehled');
       results.innerHTML = items.map((item: ParteItem) => item.imageUrl ? `<article class="parte-card">
-        <button class="parte-card-trigger" type="button" data-parte-open data-image="${escapeHtml(item.imageUrl)}" data-name="${escapeHtml(item.name)}" aria-label="Zvětšit smuteční oznámení: ${escapeHtml(item.name)}">
+        <button class="parte-card-trigger" type="button" data-parte-open data-image="${escapeHtml(item.fullImageUrl || item.imageUrl)}" data-name="${escapeHtml(item.name)}" aria-label="Zvětšit smuteční oznámení: ${escapeHtml(item.name)}">
           <img src="${escapeHtml(item.imageUrl)}" alt="Smuteční oznámení: ${escapeHtml(item.name)}" loading="lazy" referrerpolicy="no-referrer">
           <span class="parte-card-copy"><strong>${escapeHtml(item.name)}</strong><small>Zobrazit celé parte</small></span>
         </button>
@@ -79,7 +77,6 @@ const { limit = 12 } = Astro.props;
           if (!imageUrl) return;
           modalImage.src = imageUrl;
           modalImage.alt = `Smuteční oznámení: ${name}`;
-          modalName.textContent = name;
           document.body.classList.add('parte-modal-open');
           modal.showModal();
         });

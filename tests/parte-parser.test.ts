@@ -12,6 +12,11 @@ describe('parseObituaries', () => {
     expect(parseObituaries(html)).toHaveLength(1);
   });
 
+  it('odvodí původní velký obrázek z detailu parte', () => {
+    const html = `<a href="/jana/g-42/id_obrazky=120&typ_sady=1" title="Jana"><img src="/assets/Image.ashx?id_org=19436&id_obrazky=121&datum=x"></a>`;
+    expect(parseObituaries(html)[0]?.fullImageUrl).toBe('https://www.zamberk.cz/assets/Image.ashx?id_org=19436&id_obrazky=120&datum=x');
+  });
+
   it('vrací prázdné pole při změně struktury', () => {
     expect(parseObituaries('<main><p>Bez záznamů</p></main>')).toEqual([]);
   });

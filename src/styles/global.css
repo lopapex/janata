@@ -123,14 +123,13 @@ blockquote cite { display: block; margin-top: .8rem; color: var(--muted); font-s
 .parte-card-copy { display: grid; gap: .35rem; padding: 1.2rem 1.3rem 1.4rem; }
 .parte-card-copy strong { color: var(--text); font-size: 1.15rem; line-height: 1.2; }
 .parte-card-copy small { color: var(--accent); font-size: .82rem; font-weight: 700; }
-.parte-modal { width: min(940px, calc(100vw - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); padding: 0; border: 0; border-radius: var(--radius); overflow: hidden; background: #101714; color: var(--white); box-shadow: 0 28px 90px rgba(0, 0, 0, .45); }
+.parte-modal { width: min(1200px, calc(100vw - .75rem)); max-width: none; height: calc(100dvh - .75rem); max-height: none; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background: #101714; color: var(--white); box-shadow: 0 28px 90px rgba(0, 0, 0, .55); }
 .parte-modal::backdrop { background: rgba(10, 17, 14, .82); backdrop-filter: blur(5px); }
-.parte-modal-shell { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; max-height: calc(100dvh - 2rem); }
-.parte-modal-image { display: grid; place-items: center; min-height: 0; padding: clamp(1rem, 3vw, 2rem); overflow: auto; }
-.parte-modal-image img { width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 7.5rem); object-fit: contain; box-shadow: 0 10px 35px rgba(0, 0, 0, .32); }
-.parte-modal p { margin: 0; padding: .9rem 4.5rem 1rem 1.5rem; color: rgba(255, 255, 255, .82); font-size: .9rem; }
-.parte-modal-close { position: absolute; top: .8rem; right: .8rem; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255, 255, 255, .28); border-radius: 50%; background: rgba(16, 23, 20, .82); color: var(--white); cursor: pointer; backdrop-filter: blur(8px); }
-.parte-modal-close span[aria-hidden] { font-size: 1.8rem; line-height: 1; transform: translateY(-1px); }
+.parte-modal-shell { position: relative; height: 100%; }
+.parte-modal-image { display: grid; place-items: center; width: 100%; height: 100%; min-height: 0; padding: clamp(.25rem, 1vw, .75rem); overflow: hidden; }
+.parte-modal-image img { width: 100%; max-width: none; height: 100%; max-height: none; object-fit: contain; }
+.parte-modal-close { position: absolute; top: 1rem; right: 1rem; z-index: 2; display: grid; place-items: center; width: 54px; height: 54px; padding: 0; border: 3px solid #fff; border-radius: 50%; background: #17231f; color: #fff; cursor: pointer; box-shadow: 0 5px 22px rgba(0, 0, 0, .62); }
+.parte-modal-close span[aria-hidden] { font-size: 2.25rem; font-weight: 500; line-height: 1; transform: translateY(-2px); }
 .parte-modal-close:hover { background: var(--accent-hover); }
 .parte-modal-close:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
 body.parte-modal-open { overflow: hidden; }
