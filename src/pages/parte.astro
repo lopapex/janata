@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ParteGrid from '../components/ParteGrid.astro';
+---
+<BaseLayout title="Smuteční oznámení | Pohřební služba Janata" description="Aktuální smuteční oznámení ze Žamberka zveřejněná se souhlasem pozůstalých rodin." canonicalPath="/parte/">
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Smuteční deska</p>
+      <h1>Smuteční oznámení</h1>
+      <p>Parte zpracovaná Pohřební službou Daniel Janata a zveřejněná se souhlasem pozůstalé rodiny.</p>
+    </div>
+  </section>
+  <section class="section parte-page">
+    <div class="container">
+      <ParteGrid limit={12} />
+      <div class="source-note">
+        <p>Zdrojem přehledu je oficiální web města Žamberk. Původní záznam je vždy rozhodující.</p>
+        <a class="button button-secondary" href="https://www.zamberk.cz/smutecni-oznameni/d-19472" target="_blank" rel="noopener noreferrer">Web města Žamberk</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

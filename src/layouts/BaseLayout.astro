@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  image?: string;
+}
+
+const { title, description, canonicalPath = '/', image = '/images/hero-janata.webp' } = Astro.props;
+const site = Astro.site || new URL('https://pohrebni-sluzba-janata.netlify.app');
+const canonical = new URL(canonicalPath, site);
+const ogImage = new URL(image, site);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': ['FuneralHome', 'LocalBusiness'],
+  name: 'Pohřební služba Janata',
+  image: ogImage.toString(),
+  telephone: '+420465614492',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Pod Radnicí 154',
+    postalCode: '564 01',
+    addressLocality: 'Žamberk',
+    addressCountry: 'CZ'
+  },
+  url: site.toString()
+};
+---
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#18352d" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%2318352d%22/><text x=%2250%22 y=%2267%22 text-anchor=%22middle%22 font-size=%2252%22 fill=%22%23f4f6f3%22>J</text></svg>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">J</span>
+          <span><strong>Pohřební služba</strong><small>Daniel Janata</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+          <span class="sr-only">Otevřít nabídku</span><span></span><span></span>
+        </button>
+        <nav id="main-nav" class="main-nav" aria-label="Hlavní navigace">
+          <a href="/#sluzby">Služby</a>
+          <a href="/#postup">Co dělat</a>
+          <a href="/parte/">Parte</a>
+          <a href="/#kontakt">Kontakt</a>
+          <a class="nav-call" href="tel:+420465614492">465 614 492</a>
+        </nav>
+      </div>
+    </header>
+    <main id="obsah"><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div><strong>Pohřební služba Janata</strong><p>Citlivá pomoc při posledním rozloučení.</p></div>
+        <div><strong>Kontakt</strong><a href="tel:+420465614492">+420 465 614 492</a><span>Pod Radnicí 154, Žamberk</span></div>
+        <div><strong>Informace</strong><a href="/parte/">Smuteční oznámení</a><span>IČO 61212555</span></div>
+      </div>
+      <div class="container footer-bottom"><span>© {new Date().getFullYear()} Daniel Janata</span><span>Web respektuje soukromí pozůstalých.</span></div>
+    </footer>
+    <a class="floating-call" href="tel:+420465614492" aria-label="Zavolat Pohřební službě Janata">Zavolat</a>
+    <script>
+      const toggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.main-nav');
+      toggle?.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        nav?.classList.toggle('is-open', !expanded);
+      });
+      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('is-open');
+      }));
+    </script>
+  </body>
+</html>

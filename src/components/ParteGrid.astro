@@ -1,0 +1,46 @@
+---
+interface Props { limit?: number; }
+const { limit = 12 } = Astro.props;
+---
+<div class="parte-live" data-parte-grid data-limit={limit} aria-live="polite">
+  <div class="parte-loading" data-loading>
+    {Array.from({ length: Math.min(limit, 3) }).map(() => <div class="parte-skeleton" aria-hidden="true"><span></span><i></i></div>)}
+    <span class="sr-only">Načítám smuteční oznámení</span>
+  </div>
+  <div class="parte-grid" data-results hidden></div>
+  <div class="parte-state" data-state hidden>
+    <h3>Aktuální oznámení jsou na webu města</h3>
+    <p>Přehled se nyní nepodařilo načíst. Všechna zveřejněná parte najdete přímo na smuteční desce Žamberka.</p>
+    <a class="text-link" href="https://www.zamberk.cz/smutecni-oznameni/d-19472" target="_blank" rel="noopener noreferrer">Zobrazit oznámení na webu města</a>
+  </div>
+</div>
+<script>
+  interface ParteItem { name: string; detailUrl: string; imageUrl?: string; }
+  const entities: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+  const escapeHtml = (value: unknown) => String(value).replace(/[&<>'"]/g, (char) => entities[char] ?? char);
+  document.querySelectorAll('[data-parte-grid]').forEach(async (root) => {
+    const loading = root.querySelector<HTMLElement>('[data-loading]');
+    const results = root.querySelector<HTMLElement>('[data-results]');
+    const state = root.querySelector<HTMLElement>('[data-state]');
+    if (!loading || !results || !state) return;
+    const limit = Number(root.getAttribute('data-limit') || 12);
+    try {
+      const response = await fetch('/api/parte.json');
+      if (!response.ok) throw new Error('Zdroj není dostupný');
+      const data = await response.json() as { items?: ParteItem[] };
+      const items: ParteItem[] = Array.isArray(data.items) ? data.items.slice(0, limit) : [];
+      if (!items.length) throw new Error('Prázdný přehled');
+      results.innerHTML = items.map((item: ParteItem) => `<article class="parte-card">
+        <a href="${escapeHtml(item.detailUrl)}" target="_blank" rel="noopener noreferrer">
+          ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="Smuteční oznámení: ${escapeHtml(item.name)}" loading="lazy" referrerpolicy="no-referrer">` : '<div class="parte-placeholder">Smuteční oznámení</div>'}
+          <div><h3>${escapeHtml(item.name)}</h3><span>Zobrazit na webu města</span></div>
+        </a>
+      </article>`).join('');
+      results.hidden = false;
+    } catch {
+      state.hidden = false;
+    } finally {
+      loading.hidden = true;
+    }
+  });
+</script>
