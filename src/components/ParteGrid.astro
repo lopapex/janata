@@ -13,29 +13,77 @@ const { limit = 12 } = Astro.props;
     <p>Přehled se nyní nepodařilo načíst. Všechna zveřejněná parte najdete přímo na smuteční desce Žamberka.</p>
     <a class="text-link" href="https://www.zamberk.cz/smutecni-oznameni/d-19472" target="_blank" rel="noopener noreferrer">Zobrazit oznámení na webu města</a>
   </div>
+  <dialog class="parte-modal" data-parte-modal aria-label="Velký náhled smutečního oznámení">
+    <div class="parte-modal-shell">
+      <button class="parte-modal-close" type="button" data-parte-close>
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Zavřít náhled</span>
+      </button>
+      <div class="parte-modal-image">
+        <img data-parte-modal-image alt="" referrerpolicy="no-referrer" />
+      </div>
+      <p data-parte-modal-name></p>
+    </div>
+  </dialog>
 </div>
 <script>
-  interface ParteItem { name: string; detailUrl: string; imageUrl?: string; }
+  interface ParteItem { name: string; imageUrl?: string; }
   const entities: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
   const escapeHtml = (value: unknown) => String(value).replace(/[&<>'"]/g, (char) => entities[char] ?? char);
   document.querySelectorAll('[data-parte-grid]').forEach(async (root) => {
     const loading = root.querySelector<HTMLElement>('[data-loading]');
     const results = root.querySelector<HTMLElement>('[data-results]');
     const state = root.querySelector<HTMLElement>('[data-state]');
-    if (!loading || !results || !state) return;
+    const modal = root.querySelector<HTMLDialogElement>('[data-parte-modal]');
+    const modalImage = root.querySelector<HTMLImageElement>('[data-parte-modal-image]');
+    const modalName = root.querySelector<HTMLElement>('[data-parte-modal-name]');
+    const modalClose = root.querySelector<HTMLButtonElement>('[data-parte-close]');
+    if (!loading || !results || !state || !modal || !modalImage || !modalName || !modalClose) return;
     const limit = Number(root.getAttribute('data-limit') || 12);
+
+    const closeModal = () => {
+      if (modal.open) modal.close();
+    };
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+    modal.addEventListener('close', () => {
+      document.body.classList.remove('parte-modal-open');
+      modalImage.removeAttribute('src');
+    });
+
     try {
       const response = await fetch('/api/parte.json');
       if (!response.ok) throw new Error('Zdroj není dostupný');
       const data = await response.json() as { items?: ParteItem[] };
       const items: ParteItem[] = Array.isArray(data.items) ? data.items.slice(0, limit) : [];
       if (!items.length) throw new Error('Prázdný přehled');
-      results.innerHTML = items.map((item: ParteItem) => `<article class="parte-card">
-        <a href="${escapeHtml(item.detailUrl)}" target="_blank" rel="noopener noreferrer">
-          ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="Smuteční oznámení: ${escapeHtml(item.name)}" loading="lazy" referrerpolicy="no-referrer">` : '<div class="parte-placeholder">Smuteční oznámení</div>'}
-          <div><h3>${escapeHtml(item.name)}</h3><span>Zobrazit na webu města</span></div>
-        </a>
+      results.innerHTML = items.map((item: ParteItem) => item.imageUrl ? `<article class="parte-card">
+        <button class="parte-card-trigger" type="button" data-parte-open data-image="${escapeHtml(item.imageUrl)}" data-name="${escapeHtml(item.name)}" aria-label="Zvětšit smuteční oznámení: ${escapeHtml(item.name)}">
+          <img src="${escapeHtml(item.imageUrl)}" alt="Smuteční oznámení: ${escapeHtml(item.name)}" loading="lazy" referrerpolicy="no-referrer">
+          <span class="parte-card-copy"><strong>${escapeHtml(item.name)}</strong><small>Zobrazit celé parte</small></span>
+        </button>
+      </article>` : `<article class="parte-card">
+        <div class="parte-card-static">
+          <div class="parte-placeholder">Smuteční oznámení</div>
+          <span class="parte-card-copy"><strong>${escapeHtml(item.name)}</strong></span>
+        </div>
       </article>`).join('');
+
+      results.querySelectorAll<HTMLButtonElement>('[data-parte-open]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const imageUrl = button.dataset.image;
+          const name = button.dataset.name || 'Smuteční oznámení';
+          if (!imageUrl) return;
+          modalImage.src = imageUrl;
+          modalImage.alt = `Smuteční oznámení: ${name}`;
+          modalName.textContent = name;
+          document.body.classList.add('parte-modal-open');
+          modal.showModal();
+        });
+      });
       results.hidden = false;
     } catch {
       state.hidden = false;
